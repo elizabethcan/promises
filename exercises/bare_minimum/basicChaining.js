@@ -23,13 +23,11 @@ var fetchProfileAndWriteToFile = function(readFilePath, writeFilePath) {
   // read github username from first line of readFilePath
   return pluckFirstLineFromFileAsync(readFilePath)
     .then((username) =>{
-      console.log('username: ' + username);
       return getGitHubProfileAsync(username);
     })
     .then((body) => {
       body = JSON.stringify(body);
-      console.log('body: ', body);
-      fs.writeFile(writeFilePath, body, (err) => {
+      return fs.writeFileAsync(writeFilePath, body, (err) => {
         if (err) {
           return err;
         }
